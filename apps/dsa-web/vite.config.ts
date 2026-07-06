@@ -91,7 +91,8 @@ const getVendorChunkName = (id: string): string | undefined => {
 }
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  base: process.env.GITHUB_PAGES === 'true' ? '/daily_stock_analysis/' : '/',
   define: {
     __APP_PACKAGE_VERSION__: JSON.stringify(packageJson.version ?? '0.0.0'),
     __APP_BUILD_TIME__: JSON.stringify(buildTime),
@@ -115,8 +116,9 @@ export default defineConfig({
     },
   },
   build: {
-    // 打包输出到项目根目录的 static 文件夹
-    outDir: path.resolve(__dirname, '../../static'),
+    outDir: process.env.GITHUB_PAGES === 'true'
+      ? path.resolve(__dirname, 'dist')
+      : path.resolve(__dirname, '../../static'),
     emptyOutDir: true,
     rollupOptions: {
       output: {
@@ -124,4 +126,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))
