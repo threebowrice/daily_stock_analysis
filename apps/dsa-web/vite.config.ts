@@ -91,7 +91,7 @@ const getVendorChunkName = (id: string): string | undefined => {
 }
 
 // https://vite.dev/config/
-export default defineConfig(({ command }) => ({
+export default defineConfig(() => ({
   base: process.env.GITHUB_PAGES === 'true' ? '/daily_stock_analysis/' : '/',
   define: {
     __APP_PACKAGE_VERSION__: JSON.stringify(packageJson.version ?? '0.0.0'),
